@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hedi Style</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            direction: rtl;
+        }
+        header {
+            background-color: #ff6f61;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        nav {
+            background-color: #ff857a;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .hero {
+            background: url('https://images.unsplash.com/photo-1520975918319-50d69fcf87c3') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+        .hero h2 {
+            font-size: 3rem;
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .product {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+        }
+        .product img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .product h3 {
+            margin: 10px 0;
+        }
+        .product p {
+            color: #777;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6f61;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 15px 0;
+        }
+        .btn:hover {
+            background-color: #ff857a;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        section {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hedi Style</h1>
+        <p>مد و استایل شما</p>
+    </header>
+    <nav>
+        <a href="#home">خانه</a>
+        <a href="#" onclick="openModal()">افزودن محصول</a>
+        <a href="#about">درباره ما</a>
+        <a href="#contact">تماس با ما</a>
+    </nav>
+    <section class="hero" id="home">
+        <h2>جدیدترین مدها را کشف کنید</h2>
+    </section>
+    <section class="products" id="product-list">
+        <!-- محصولات بعد از ورود اضافه می‌شوند -->
+    </section>
+    <section id="about">
+        <h2>درباره ما</h2>
+        <p>Hedi Style یک برند خلاق در زمینه مد و سبک زندگی است که با ارائه محصولات باکیفیت و طراحی‌های خاص، سعی در ایجاد تجربه‌ای متفاوت برای مشتریان خود دارد. فعالیت اصلی ما در صفحه اینستاگرام انجام می‌شود که در آن آخرین محصولات، تخفیف‌ها و پیشنهادهای ویژه را معرفی می‌کنیم. برای دریافت به‌روزترین اطلاعات، حتماً ما را در اینستاگرام دنبال کنید.</p>
+    </section>
+    <section id="contact">
+        <h2>تماس با ما</h2>
+        <p>برای ارتباط با ما می‌توانید از طریق شماره تماس زیر اقدام کنید:</p>
+        <p>شماره تماس: </p>
+        <p>یا از طریق ایمیل: info@hedistyle.com</p>
+    </section>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h3>رمز عبور را وارد کنید</h3>
+            <input type="password" id="password" placeholder="رمز عبور">
+            <button onclick="checkPassword()" class="btn">ورود</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>تمامی حقوق محفوظ است &copy; ۲۰۲۵ Hedi Style</p>
+    </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+        function checkPassword() {
+            const pass = document.getElementById('password').value;
+            if(pass === 'HSp123') {
+                const name = prompt('نام محصول:');
+                const price = prompt('قیمت محصول:');
+                const image = prompt('آدرس تصویر محصول:');
+                const seller = prompt('شماره فروشنده:');
+                if(name && price && image && seller) {
+                    const productHTML = `<div class=\"product\">
+                        <img src=\"${image}\" alt=\"${name}\">
+                        <h3>${name}</h3>
+                        <p>${price}</p>
+                        <p>فروشنده: ${seller}</p>
+                    </div>`;
+                    document.getElementById('product-list').innerHTML += productHTML;
+                }
+                document.getElementById('loginModal').style.display = 'none';
+            } else {
+                alert('رمز اشتباه است!');
+            }
+        }
+        window.onclick = function(event) {
+            if(event.target == document.getElementById('loginModal')) {
+                document.getElementById('loginModal').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
