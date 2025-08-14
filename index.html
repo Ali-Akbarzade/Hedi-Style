@@ -79,12 +79,13 @@
         }
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 15px 30px;
             background-color: #ff6f61;
             color: white;
-            border-radius: 5px;
+            border-radius: 50px;
             text-decoration: none;
-            margin: 15px 0;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
         }
         .btn:hover {
             background-color: #ff857a;
@@ -96,33 +97,12 @@
             padding: 15px;
             margin-top: 20px;
         }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-        }
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
         section {
             padding: 20px;
+        }
+        .form-link {
+            text-align: center;
+            margin: 40px 0;
         }
     </style>
 </head>
@@ -133,20 +113,28 @@
     </header>
     <nav>
         <a href="#home">خانه</a>
-        <a href="#" onclick="openModal()">افزودن محصول</a>
+        <a href="#form">فرم اضافه کردن لباس</a>
         <a href="#about">درباره ما</a>
         <a href="#contact">تماس با ما</a>
     </nav>
+
     <section class="hero" id="home">
         <h2>جدیدترین مدها را کشف کنید</h2>
     </section>
+
     <section class="products" id="product-list">
-        <!-- محصولات بعد از ورود اضافه می‌شوند -->
+        <!-- محصولات اضافه شده نمایش داده می‌شوند -->
     </section>
+
+    <section class="form-link" id="form">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfi5UaoI4rHZSfyA1L2aKEYjlN44hDHFUv49v5Gr40N5eBFTg/viewform?usp=header" class="btn" target="_blank">اضافه کردن لباس جدید</a>
+    </section>
+
     <section id="about">
         <h2>درباره ما</h2>
         <p>Hedi Style یک برند خلاق در زمینه مد و سبک زندگی است که با ارائه محصولات باکیفیت و طراحی‌های خاص، سعی در ایجاد تجربه‌ای متفاوت برای مشتریان خود دارد. فعالیت اصلی ما در صفحه اینستاگرام انجام می‌شود که در آن آخرین محصولات، تخفیف‌ها و پیشنهادهای ویژه را معرفی می‌کنیم. برای دریافت به‌روزترین اطلاعات، حتماً ما را در اینستاگرام دنبال کنید.</p>
     </section>
+
     <section id="contact">
         <h2>تماس با ما</h2>
         <p>برای ارتباط با ما می‌توانید از طریق شماره تماس زیر اقدام کنید:</p>
@@ -154,67 +142,8 @@
         <p>یا از طریق ایمیل: info@hedistyle.com</p>
     </section>
 
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h3>رمز عبور را وارد کنید</h3>
-            <input type="password" id="password" placeholder="رمز عبور">
-            <button onclick="checkPassword()" class="btn">ورود</button>
-        </div>
-    </div>
-
     <footer>
         <p>تمامی حقوق محفوظ است &copy; ۲۰۲۵ Hedi Style</p>
     </footer>
-
-    <script>
-        // نمایش محصولات ذخیره شده از LocalStorage
-        function loadProducts() {
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '';
-            products.forEach(product => {
-                const productHTML = `<div class="product">
-                    <img src="${product.image}" alt="${product.name}">
-                    <h3>${product.name}</h3>
-                    <p>${product.price}</p>
-                    <p>فروشنده: ${product.seller}</p>
-                </div>`;
-                productList.innerHTML += productHTML;
-            });
-        }
-
-        function openModal() {
-            document.getElementById('loginModal').style.display = 'block';
-        }
-
-        function checkPassword() {
-            const pass = document.getElementById('password').value;
-            if(pass === 'HSp123') {
-                const name = prompt('نام محصول:');
-                const price = prompt('قیمت محصول:');
-                const image = prompt('آدرس تصویر محصول:');
-                const seller = prompt('شماره فروشنده:');
-                if(name && price && image && seller) {
-                    const product = { name, price, image, seller };
-                    const products = JSON.parse(localStorage.getItem('products')) || [];
-                    products.push(product);
-                    localStorage.setItem('products', JSON.stringify(products));
-                    loadProducts();
-                }
-                document.getElementById('loginModal').style.display = 'none';
-            } else {
-                alert('رمز اشتباه است!');
-            }
-        }
-
-        window.onclick = function(event) {
-            if(event.target == document.getElementById('loginModal')) {
-                document.getElementById('loginModal').style.display = 'none';
-            }
-        }
-
-        // بارگذاری محصولات هنگام باز شدن سایت
-        window.onload = loadProducts;
-    </script>
 </body>
 </html>
