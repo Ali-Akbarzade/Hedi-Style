@@ -167,9 +167,26 @@
     </footer>
 
     <script>
+        // نمایش محصولات ذخیره شده از LocalStorage
+        function loadProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const productHTML = `<div class="product">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>${product.price}</p>
+                    <p>فروشنده: ${product.seller}</p>
+                </div>`;
+                productList.innerHTML += productHTML;
+            });
+        }
+
         function openModal() {
             document.getElementById('loginModal').style.display = 'block';
         }
+
         function checkPassword() {
             const pass = document.getElementById('password').value;
             if(pass === 'HSp123') {
@@ -178,24 +195,26 @@
                 const image = prompt('آدرس تصویر محصول:');
                 const seller = prompt('شماره فروشنده:');
                 if(name && price && image && seller) {
-                    const productHTML = `<div class=\"product\">
-                        <img src=\"${image}\" alt=\"${name}\">
-                        <h3>${name}</h3>
-                        <p>${price}</p>
-                        <p>فروشنده: ${seller}</p>
-                    </div>`;
-                    document.getElementById('product-list').innerHTML += productHTML;
+                    const product = { name, price, image, seller };
+                    const products = JSON.parse(localStorage.getItem('products')) || [];
+                    products.push(product);
+                    localStorage.setItem('products', JSON.stringify(products));
+                    loadProducts();
                 }
                 document.getElementById('loginModal').style.display = 'none';
             } else {
                 alert('رمز اشتباه است!');
             }
         }
+
         window.onclick = function(event) {
             if(event.target == document.getElementById('loginModal')) {
                 document.getElementById('loginModal').style.display = 'none';
             }
         }
+
+        // بارگذاری محصولات هنگام باز شدن سایت
+        window.onload = loadProducts;
     </script>
 </body>
 </html>
